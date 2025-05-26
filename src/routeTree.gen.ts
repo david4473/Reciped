@@ -14,7 +14,8 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SigninImport } from './routes/signin'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateRecipeIndexImport } from './routes/create-recipe/index'
-import { Route as RecipeIdImport } from './routes/recipe/$id'
+import { Route as RecipeIdIndexImport } from './routes/recipe/$id/index'
+import { Route as RecipeIdEditIndexImport } from './routes/recipe/$id/edit/index'
 
 // Create/Update Routes
 
@@ -36,9 +37,15 @@ const CreateRecipeIndexRoute = CreateRecipeIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const RecipeIdRoute = RecipeIdImport.update({
-  id: '/recipe/$id',
-  path: '/recipe/$id',
+const RecipeIdIndexRoute = RecipeIdIndexImport.update({
+  id: '/recipe/$id/',
+  path: '/recipe/$id/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RecipeIdEditIndexRoute = RecipeIdEditIndexImport.update({
+  id: '/recipe/$id/edit/',
+  path: '/recipe/$id/edit/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,18 +67,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninImport
       parentRoute: typeof rootRoute
     }
-    '/recipe/$id': {
-      id: '/recipe/$id'
-      path: '/recipe/$id'
-      fullPath: '/recipe/$id'
-      preLoaderRoute: typeof RecipeIdImport
-      parentRoute: typeof rootRoute
-    }
     '/create-recipe/': {
       id: '/create-recipe/'
       path: '/create-recipe'
       fullPath: '/create-recipe'
       preLoaderRoute: typeof CreateRecipeIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/recipe/$id/': {
+      id: '/recipe/$id/'
+      path: '/recipe/$id'
+      fullPath: '/recipe/$id'
+      preLoaderRoute: typeof RecipeIdIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/recipe/$id/edit/': {
+      id: '/recipe/$id/edit/'
+      path: '/recipe/$id/edit'
+      fullPath: '/recipe/$id/edit'
+      preLoaderRoute: typeof RecipeIdEditIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -82,46 +96,62 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
-  '/recipe/$id': typeof RecipeIdRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
+  '/recipe/$id': typeof RecipeIdIndexRoute
+  '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
-  '/recipe/$id': typeof RecipeIdRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
+  '/recipe/$id': typeof RecipeIdIndexRoute
+  '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
-  '/recipe/$id': typeof RecipeIdRoute
   '/create-recipe/': typeof CreateRecipeIndexRoute
+  '/recipe/$id/': typeof RecipeIdIndexRoute
+  '/recipe/$id/edit/': typeof RecipeIdEditIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signin' | '/recipe/$id' | '/create-recipe'
+  fullPaths:
+    | '/'
+    | '/signin'
+    | '/create-recipe'
+    | '/recipe/$id'
+    | '/recipe/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/recipe/$id' | '/create-recipe'
-  id: '__root__' | '/' | '/signin' | '/recipe/$id' | '/create-recipe/'
+  to: '/' | '/signin' | '/create-recipe' | '/recipe/$id' | '/recipe/$id/edit'
+  id:
+    | '__root__'
+    | '/'
+    | '/signin'
+    | '/create-recipe/'
+    | '/recipe/$id/'
+    | '/recipe/$id/edit/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SigninRoute: typeof SigninRoute
-  RecipeIdRoute: typeof RecipeIdRoute
   CreateRecipeIndexRoute: typeof CreateRecipeIndexRoute
+  RecipeIdIndexRoute: typeof RecipeIdIndexRoute
+  RecipeIdEditIndexRoute: typeof RecipeIdEditIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SigninRoute: SigninRoute,
-  RecipeIdRoute: RecipeIdRoute,
   CreateRecipeIndexRoute: CreateRecipeIndexRoute,
+  RecipeIdIndexRoute: RecipeIdIndexRoute,
+  RecipeIdEditIndexRoute: RecipeIdEditIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -136,8 +166,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/signin",
-        "/recipe/$id",
-        "/create-recipe/"
+        "/create-recipe/",
+        "/recipe/$id/",
+        "/recipe/$id/edit/"
       ]
     },
     "/": {
@@ -146,11 +177,14 @@ export const routeTree = rootRoute
     "/signin": {
       "filePath": "signin.tsx"
     },
-    "/recipe/$id": {
-      "filePath": "recipe/$id.tsx"
-    },
     "/create-recipe/": {
       "filePath": "create-recipe/index.tsx"
+    },
+    "/recipe/$id/": {
+      "filePath": "recipe/$id/index.tsx"
+    },
+    "/recipe/$id/edit/": {
+      "filePath": "recipe/$id/edit/index.tsx"
     }
   }
 }

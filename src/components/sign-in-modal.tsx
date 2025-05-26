@@ -25,8 +25,11 @@ export default function SignInModal({
 
   const handleGoogleSignIn = async () => {
     try {
-      authClient.signIn.social({ provider: "google" });
-      onSignInSuccess();
+      await authClient.signIn.social({ provider: "google" });
+      if (session) {
+        // User is signed in, call the success handler
+        onSignInSuccess();
+      }
     } catch (err) {
       console.error("Sign in failed:", error);
     }

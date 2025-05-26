@@ -32,7 +32,7 @@ function RouteComponent() {
     title: "",
     difficulty: "",
     cookTime: "",
-    instructions: "",
+    overview: "",
   });
 
   const [ingredients, setIngredients] = useState<string[]>([""]);
@@ -173,13 +173,13 @@ function RouteComponent() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="instructions">Quick Instructions</Label>
+                  <Label htmlFor="overview">Quick overview</Label>
                   <Textarea
-                    id="instructions"
+                    id="overview"
                     placeholder="Brief overview of the recipe..."
-                    value={formData.instructions}
+                    value={formData.overview}
                     onChange={(e) =>
-                      setFormData({ ...formData, instructions: e.target.value })
+                      setFormData({ ...formData, overview: e.target.value })
                     }
                     rows={3}
                   />
@@ -231,7 +231,7 @@ function RouteComponent() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Instructions</CardTitle>
+                  <CardTitle>overview</CardTitle>
                   <Button
                     type="button"
                     variant="outline"

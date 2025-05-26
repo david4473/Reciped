@@ -7,7 +7,6 @@ const readRecipes = async () => {};
 
 export const getRecipes = createServerFn({ method: "GET" }).handler(
   async () => {
-    console.info("Fetching recipes...");
     const recipes = await prisma.recipe.findMany({
       where: { isPublic: true },
     });
@@ -17,3 +16,18 @@ export const getRecipes = createServerFn({ method: "GET" }).handler(
     return recipes;
   }
 );
+
+export const getRecipeById = createServerFn({ method: "GET" })
+  .validator((id: string) => id)
+  .handler(async ({ data }) => {
+    const recipe = await prisma.recipe.findUnique({
+      where: { id: data },
+      include: {
+        author: true,
+      },
+    });
+    if (!recipe) {
+      throw new Error(`Recipe with ID ${data} not found`);
+    }
+    return recipe;
+  });

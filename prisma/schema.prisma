@@ -33,10 +33,13 @@ enum difficultyLevel {
 model Recipe {
   id           String              @id @default(cuid())
   title        String?
-  instructions String?
+  overview String?
+  ingredients  String[]
+  steps        String[]
   difficulty   difficultyLevel?
   cookTime     Int?
   isPublic     Boolean          @default(true)
+  createdAt     DateTime
   authorId     String
   author       User             @relation(fields: [authorId], references: [id])
 }

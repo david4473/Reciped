@@ -14,6 +14,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link } from "@tanstack/react-router";
 import { Recipe as prismaRecipe } from "@/generated/prisma";
 import authClient from "@/lib/auth-client";
+import { getIngredientName } from "@/utils/stringUtils";
+import { difficultyConfig } from "@/utils/config";
 
 interface RecipeCardProps {
   recipe: prismaRecipe;
@@ -21,18 +23,6 @@ interface RecipeCardProps {
   onDelete?: (id: string) => void;
   onTogglePrivacy?: (id: string) => void;
 }
-
-const difficultyConfig = {
-  EASY: {
-    color: "bg-green-100 text-green-800 border-green-200",
-    label: "Easy",
-  },
-  MEDIUM: {
-    color: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    label: "Medium",
-  },
-  HARD: { color: "bg-red-100 text-red-800 border-red-200", label: "Hard" },
-};
 
 export default function RecipeCard({
   recipe,
@@ -42,7 +32,6 @@ export default function RecipeCard({
 }: RecipeCardProps) {
   const { data: session } = authClient.useSession();
   const isAuthor = session?.user.id === recipe.authorId;
-
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -84,12 +73,6 @@ export default function RecipeCard({
                 <Clock className="h-4 w-4" />
                 <span>{recipe.cookTime}</span>
               </div>
-              {recipe.isPublic && (
-                <Badge variant="outline" className="bg-gray-100 text-gray-600">
-                  <Lock className="mr-1 h-3 w-3" />
-                  Private
-                </Badge>
-              )}
             </div>
           </div>
 
@@ -113,13 +96,6 @@ export default function RecipeCard({
                   <Edit className="mr-2 h-4 w-4" />
                   Edit Recipe
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={handleTogglePrivacy}
-                  className="cursor-pointer"
-                >
-                  <Lock className="mr-2 h-4 w-4" />
-                  {recipe.isPublic ? "Make Public" : "Make Private"}
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleDelete}
@@ -136,12 +112,38 @@ export default function RecipeCard({
       </CardHeader>
 
       <CardContent>
+        {recipe.ingredients && recipe.ingredients.length > 0 && (
+          <div>
+            <h4 className="font-medium mb-2 text-sm text-muted-foreground">
+              Ingredients
+            </h4>
+            <div className="flex flex-wrap mb-2 gap-1.5">
+              {recipe.ingredients.slice(0, 2).map((ingredient, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="text-xs py-1 px-0 bg-muted/50 hover:bg-muted/70 transition-colors"
+                >
+                  {getIngredientName(ingredient)}
+                </Badge>
+              ))}
+              {recipe.ingredients.length > 2 && (
+                <Badge
+                  variant="outline"
+                  className="text-xs py-1 text-muted-foreground border-dashed"
+                >
+                  +{recipe.ingredients.length - 2} more
+                </Badge>
+              )}
+            </div>
+          </div>
+        )}
         <div>
           <h4 className="font-medium mb-2 text-sm text-muted-foreground">
-            Instructions
+            Overview
           </h4>
           <p className="text-sm leading-relaxed line-clamp-4">
-            {recipe.instructions}
+            {recipe.overview}
           </p>
           <Link
             to={`/recipes/${recipe.id}` as string}
