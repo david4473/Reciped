@@ -101,7 +101,7 @@ function RouteComponent() {
                   <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem className="cursor-pointer">
                       <Lock className="mr-2 h-4 w-4" />
-                      {recipe.isPrivate ? "Make Public" : "Make Private"}
+                      {recipe.isPublic ? "Make Public" : "Make Private"}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">

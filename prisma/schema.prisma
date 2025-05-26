@@ -39,7 +39,7 @@ model Recipe {
   difficulty   difficultyLevel?
   cookTime     Int?
   isPublic     Boolean          @default(true)
-  createdAt     DateTime
+  createdAt    DateTime @default(now())
   authorId     String
   author       User             @relation(fields: [authorId], references: [id])
 }
