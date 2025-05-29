@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
 
 import type React from "react";
 
@@ -19,9 +24,22 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { getUserID } from "@/lib/auth-server";
 
 export const Route = createFileRoute("/create-recipe/")({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const userID = await getUserID();
+    return {
+      userID,
+    };
+  },
+  loader: async ({ context: ctx }) => {
+    if (!ctx.userID) {
+      throw redirect({ to: "/" });
+    }
+    return { userID: ctx.userID };
+  },
 });
 
 function RouteComponent() {

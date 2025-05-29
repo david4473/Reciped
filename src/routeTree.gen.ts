@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SigninImport } from './routes/signin'
 import { Route as IndexImport } from './routes/index'
 import { Route as CreateRecipeIndexImport } from './routes/create-recipe/index'
+import { Route as MyRecipesIndexImport } from './routes/MyRecipes/index'
 import { Route as RecipeIdIndexImport } from './routes/recipe/$id/index'
 import { Route as RecipeIdEditIndexImport } from './routes/recipe/$id/edit/index'
 
@@ -34,6 +35,12 @@ const IndexRoute = IndexImport.update({
 const CreateRecipeIndexRoute = CreateRecipeIndexImport.update({
   id: '/create-recipe/',
   path: '/create-recipe/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyRecipesIndexRoute = MyRecipesIndexImport.update({
+  id: '/MyRecipes/',
+  path: '/MyRecipes/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninImport
       parentRoute: typeof rootRoute
     }
+    '/MyRecipes/': {
+      id: '/MyRecipes/'
+      path: '/MyRecipes'
+      fullPath: '/MyRecipes'
+      preLoaderRoute: typeof MyRecipesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/create-recipe/': {
       id: '/create-recipe/'
       path: '/create-recipe'
@@ -96,6 +110,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
+  '/MyRecipes': typeof MyRecipesIndexRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
   '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
@@ -104,6 +119,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
+  '/MyRecipes': typeof MyRecipesIndexRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
   '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
@@ -113,6 +129,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/signin': typeof SigninRoute
+  '/MyRecipes/': typeof MyRecipesIndexRoute
   '/create-recipe/': typeof CreateRecipeIndexRoute
   '/recipe/$id/': typeof RecipeIdIndexRoute
   '/recipe/$id/edit/': typeof RecipeIdEditIndexRoute
@@ -123,15 +140,23 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/signin'
+    | '/MyRecipes'
     | '/create-recipe'
     | '/recipe/$id'
     | '/recipe/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/create-recipe' | '/recipe/$id' | '/recipe/$id/edit'
+  to:
+    | '/'
+    | '/signin'
+    | '/MyRecipes'
+    | '/create-recipe'
+    | '/recipe/$id'
+    | '/recipe/$id/edit'
   id:
     | '__root__'
     | '/'
     | '/signin'
+    | '/MyRecipes/'
     | '/create-recipe/'
     | '/recipe/$id/'
     | '/recipe/$id/edit/'
@@ -141,6 +166,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SigninRoute: typeof SigninRoute
+  MyRecipesIndexRoute: typeof MyRecipesIndexRoute
   CreateRecipeIndexRoute: typeof CreateRecipeIndexRoute
   RecipeIdIndexRoute: typeof RecipeIdIndexRoute
   RecipeIdEditIndexRoute: typeof RecipeIdEditIndexRoute
@@ -149,6 +175,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SigninRoute: SigninRoute,
+  MyRecipesIndexRoute: MyRecipesIndexRoute,
   CreateRecipeIndexRoute: CreateRecipeIndexRoute,
   RecipeIdIndexRoute: RecipeIdIndexRoute,
   RecipeIdEditIndexRoute: RecipeIdEditIndexRoute,
@@ -166,6 +193,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/signin",
+        "/MyRecipes/",
         "/create-recipe/",
         "/recipe/$id/",
         "/recipe/$id/edit/"
@@ -176,6 +204,9 @@ export const routeTree = rootRoute
     },
     "/signin": {
       "filePath": "signin.tsx"
+    },
+    "/MyRecipes/": {
+      "filePath": "MyRecipes/index.tsx"
     },
     "/create-recipe/": {
       "filePath": "create-recipe/index.tsx"

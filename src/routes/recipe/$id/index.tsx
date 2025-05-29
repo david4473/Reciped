@@ -67,7 +67,7 @@ function RouteComponent() {
                   <Clock className="h-4 w-4" />
                   <span>{recipe.cookTime}</span>
                 </div>
-                {recipe.isPublic && (
+                {isAuthor && !recipe.isPublic && (
                   <Badge
                     variant="outline"
                     className="bg-gray-100 text-gray-600"

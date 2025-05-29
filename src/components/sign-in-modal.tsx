@@ -1,5 +1,3 @@
-import { Chrome } from "lucide-react";
-
 import {
   Dialog,
   DialogContent,
@@ -27,7 +25,6 @@ export default function SignInModal({
     try {
       await authClient.signIn.social({ provider: "google" });
       if (session) {
-        // User is signed in, call the success handler
         onSignInSuccess();
       }
     } catch (err) {
@@ -53,7 +50,7 @@ export default function SignInModal({
             className="w-full"
             size="lg"
           >
-            <Chrome className="mr-2 h-5 w-5" />
+            <img src="/google.svg" alt="Logo" className="w-5 h-5" />
             {isPending ? "Signing in..." : "Continue with Google"}
           </Button>
 

@@ -26,7 +26,6 @@ interface RecipeCardProps {
 
 export default function RecipeCard({
   recipe,
-  onEdit,
   onDelete,
   onTogglePrivacy,
 }: RecipeCardProps) {
@@ -42,16 +41,12 @@ export default function RecipeCard({
     setIsDeleting(false);
   };
 
-  const handleEdit = () => {
-    onEdit?.(recipe.id);
-  };
-
   const handleTogglePrivacy = () => {
     onTogglePrivacy?.(recipe.id);
   };
 
   return (
-    <Card className="group relative overflow-hidden transition-all hover:shadow-lg h-full">
+    <Card className="group relative overflow-hidden transition-all hover:shadow-xl border-2 border-border/50 hover:border-border bg-card/50 backdrop-blur-sm h-full">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 space-y-3">
@@ -89,12 +84,11 @@ export default function RecipeCard({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem
-                  onClick={handleEdit}
-                  className="cursor-pointer"
-                >
+                <DropdownMenuItem className="cursor-pointer">
                   <Edit className="mr-2 h-4 w-4" />
-                  Edit Recipe
+                  <Link to={`/recipe/${recipe.id}/edit` as string}>
+                    Edit Recipe
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -130,7 +124,7 @@ export default function RecipeCard({
               {recipe.ingredients.length > 2 && (
                 <Badge
                   variant="outline"
-                  className="text-xs py-1 text-muted-foreground border-dashed"
+                  className="text-xs px-2.5 py-1 bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20"
                 >
                   +{recipe.ingredients.length - 2} more
                 </Badge>

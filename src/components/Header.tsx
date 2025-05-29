@@ -1,5 +1,5 @@
-import { ChefHat, LogOut, User } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { ChefHat, LogOut, Pizza } from "lucide-react";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,7 @@ import SignInModal from "./sign-in-modal";
 export function Header() {
   const { data: session } = authClient.useSession();
   const navigate = useNavigate();
+  const router = useRouter();
 
   const [showSignInModal, setShowSignInModal] = useState(false);
 
@@ -33,6 +34,12 @@ export function Header() {
     navigate({ to: "/create-recipe" });
   };
 
+  const handleSignOut = () => {
+    authClient.signOut().then(() => {
+      router.invalidate();
+    });
+  };
+
   return (
     <header className="sticky mx-auto top-0 z-50 max-w-7xl *: border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -43,7 +50,7 @@ export function Header() {
           </Link>
         </div>
         <div className="flex items-center gap-4">
-          <Button onClick={handleCreateRecipe}>Create Recipe</Button>
+          <Button onClick={handleCreateRecipe}>Add Recipe</Button>
           {session && (
             <>
               <DropdownMenu>
@@ -71,17 +78,15 @@ export function Header() {
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/" className="cursor-pointer">
-                      <User className="mr-2 h-4 w-4" />
+                    <Link to="/MyRecipes" className="cursor-pointer">
+                      <Pizza className="mr-2 h-4 w-4" />
                       <span>My Recipes</span>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="cursor-pointer text-destructive focus:text-destructive"
-                    onClick={() => {
-                      authClient.signOut();
-                    }}
+                    onClick={handleSignOut}
                   >
                     <span>Sign out</span>
                   </DropdownMenuItem>

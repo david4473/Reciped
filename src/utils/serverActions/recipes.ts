@@ -1,9 +1,7 @@
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient, Recipe } from "@/generated/prisma";
 import { createServerFn, json } from "@tanstack/react-start";
 
 const prisma = new PrismaClient();
-
-const readRecipes = async () => {};
 
 export const getRecipes = createServerFn({ method: "GET" }).handler(
   async () => {
@@ -30,4 +28,53 @@ export const getRecipeById = createServerFn({ method: "GET" })
       throw new Error(`Recipe with ID ${data} not found`);
     }
     return recipe;
+  });
+
+export const getAuthorRecipes = createServerFn({ method: "GET" })
+  .validator((authorId: string) => authorId)
+  .handler(async ({ data }) => {
+    const recipes = await prisma.recipe.findMany({
+      where: { authorId: data },
+      include: { author: true },
+    });
+    if (!recipes) {
+      throw new Error(`No recipes found for author with ID ${data}`);
+    }
+    return recipes;
+  });
+
+export const updateRecipe = createServerFn({ method: "POST" })
+  .validator((data: Recipe) => data)
+  .handler(async ({ data }) => {
+    try {
+      const {
+        id,
+        title,
+        overview,
+        ingredients,
+        steps,
+        difficulty,
+        cookTime,
+        isPublic,
+      } = data;
+      const updatedRecipe = await prisma.recipe.update({
+        where: { id },
+        data: {
+          title,
+          overview,
+          ingredients,
+          steps,
+          difficulty,
+          cookTime,
+          isPublic,
+        },
+      });
+      if (!updatedRecipe) {
+        throw new Error(`Failed to update recipe with ID ${id}`);
+      }
+      return updatedRecipe;
+    } catch (error) {
+      console.error("Error updating recipe:", error);
+      throw new Error("Failed to update recipe");
+    }
   });
