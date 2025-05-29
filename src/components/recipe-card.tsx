@@ -1,14 +1,6 @@
 import { useState } from "react";
 import { MoreVertical, Clock, Edit, Trash2, Lock } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link } from "@tanstack/react-router";
@@ -16,6 +8,7 @@ import { Recipe as prismaRecipe } from "@/generated/prisma";
 import authClient from "@/lib/auth-client";
 import { getIngredientName } from "@/utils/stringUtils";
 import { difficultyConfig } from "@/utils/config";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 interface RecipeCardProps {
   recipe: prismaRecipe;
@@ -72,35 +65,18 @@ export default function RecipeCard({
           </div>
 
           {isAuthor && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 opacity-0 transition-opacity group-hover:opacity-100 focus:opacity-100"
-                >
-                  <MoreVertical className="h-4 w-4" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem className="cursor-pointer">
-                  <Edit className="mr-2 h-4 w-4" />
-                  <Link to={`/recipe/${recipe.id}/edit` as string}>
-                    Edit Recipe
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleDelete}
-                  disabled={isDeleting}
-                  className="cursor-pointer text-destructive focus:text-destructive"
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  {isDeleting ? "Deleting..." : "Delete Recipe"}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="relative h-8 w-8">
+              <Avatar className="h-8 w-8">
+                <AvatarImage
+                  className="rounded-full"
+                  src={session.user.image || ""}
+                  alt="User"
+                />
+                <AvatarFallback>
+                  {session.user.name.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </div>
           )}
         </div>
       </CardHeader>
