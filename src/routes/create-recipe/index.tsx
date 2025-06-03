@@ -25,6 +25,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getUserID } from "@/lib/auth-server";
+import { createRecipe } from "@/utils/serverActions/recipes";
+import { difficultyLevel, Recipe } from "@/types";
 
 export const Route = createFileRoute("/create-recipe/")({
   component: RouteComponent,
@@ -48,7 +50,7 @@ function RouteComponent() {
 
   const [formData, setFormData] = useState({
     title: "",
-    difficulty: "",
+    difficulty: difficultyLevel.EASY,
     cookTime: "",
     overview: "",
   });
@@ -92,12 +94,15 @@ function RouteComponent() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // In a real app, you'd save to your database here
-      console.log("Recipe created:", {
-        ...formData,
-        ingredients: ingredients.filter((i) => i.trim()),
-        steps: steps.filter((s) => s.trim()),
+      await createRecipe({
+        data: {
+          ...formData,
+          cookTime: formData.cookTime ? Number(formData.cookTime) : null,
+          ingredients: ingredients.filter((i) => i.trim()),
+          steps: steps.filter((s) => s.trim()),
+        },
       });
+      console.log("Recipe created:", {});
 
       navigate({ to: "/" });
     } catch (error) {
@@ -147,7 +152,7 @@ function RouteComponent() {
                   <Input
                     id="title"
                     placeholder="Enter recipe title..."
-                    value={formData.title}
+                    value={formData.title ?? ""}
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
                     }
@@ -159,9 +164,12 @@ function RouteComponent() {
                   <div className="space-y-2">
                     <Label htmlFor="difficulty">Difficulty</Label>
                     <Select
-                      value={formData.difficulty}
+                      value={formData.difficulty ?? ""}
                       onValueChange={(value) =>
-                        setFormData({ ...formData, difficulty: value })
+                        setFormData({
+                          ...formData,
+                          difficulty: value as difficultyLevel,
+                        })
                       }
                       required
                     >
@@ -169,9 +177,9 @@ function RouteComponent() {
                         <SelectValue placeholder="Select difficulty" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="easy">Easy</SelectItem>
-                        <SelectItem value="medium">Medium</SelectItem>
-                        <SelectItem value="hard">Hard</SelectItem>
+                        <SelectItem value="EASY">Easy</SelectItem>
+                        <SelectItem value="MEDIUM">Medium</SelectItem>
+                        <SelectItem value="HARD">Hard</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -181,9 +189,12 @@ function RouteComponent() {
                     <Input
                       id="cookTime"
                       placeholder="e.g., 30 min"
-                      value={formData.cookTime}
+                      value={formData.cookTime ?? ""}
                       onChange={(e) =>
-                        setFormData({ ...formData, cookTime: e.target.value })
+                        setFormData({
+                          ...formData,
+                          cookTime: e.target.value,
+                        })
                       }
                       required
                     />
@@ -195,7 +206,7 @@ function RouteComponent() {
                   <Textarea
                     id="overview"
                     placeholder="Brief overview of the recipe..."
-                    value={formData.overview}
+                    value={formData.overview ?? ""}
                     onChange={(e) =>
                       setFormData({ ...formData, overview: e.target.value })
                     }
@@ -249,7 +260,7 @@ function RouteComponent() {
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>overview</CardTitle>
+                  <CardTitle>Steps</CardTitle>
                   <Button
                     type="button"
                     variant="outline"

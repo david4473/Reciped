@@ -1,4 +1,5 @@
 import { PrismaClient, Recipe } from "@/generated/prisma";
+import { getUserID } from "@/lib/auth-server";
 import { createServerFn, json } from "@tanstack/react-start";
 
 const prisma = new PrismaClient();
@@ -40,7 +41,43 @@ export const getAuthorRecipes = createServerFn({ method: "GET" })
     if (!recipes) {
       throw new Error(`No recipes found for author with ID ${data}`);
     }
-    return recipes;
+  });
+
+export type RecipeInput = Omit<
+  Recipe,
+  "id" | "authorId" | "createdAt" | "updatedAt" | "isPublic"
+>;
+
+export const createRecipe = createServerFn({ method: "POST" })
+  .validator((data: RecipeInput) => data)
+  .handler(async ({ data }) => {
+    // Ensure the user is authenticated and has an author ID
+    const authorId = await getUserID();
+    if (!authorId) {
+      throw new Error("Author ID is required to create a recipe");
+    }
+
+    try {
+      const { title, overview, ingredients, steps, difficulty, cookTime } =
+        data;
+      const newRecipe = await prisma.recipe.create({
+        data: {
+          title,
+          overview,
+          ingredients,
+          steps,
+          difficulty,
+          cookTime,
+          authorId: authorId,
+        },
+      });
+      if (!newRecipe) {
+        throw new Error("Failed to create recipe");
+      }
+    } catch (error) {
+      console.error("Error creating recipe:", error);
+      throw new Error("Failed to create recipe");
+    }
   });
 
 export const updateRecipe = createServerFn({ method: "POST" })
