@@ -1,6 +1,7 @@
 import { PrismaClient, Recipe } from "@/generated/prisma";
 import { getUserID } from "@/lib/auth-server";
 import { createServerFn, json } from "@tanstack/react-start";
+import { RecipeInput } from "../types";
 
 const prisma = new PrismaClient();
 
@@ -42,11 +43,6 @@ export const getAuthorRecipes = createServerFn({ method: "GET" })
       throw new Error(`No recipes found for author with ID ${data}`);
     }
   });
-
-export type RecipeInput = Omit<
-  Recipe,
-  "id" | "authorId" | "createdAt" | "updatedAt" | "isPublic"
->;
 
 export const createRecipe = createServerFn({ method: "POST" })
   .validator((data: RecipeInput) => data)

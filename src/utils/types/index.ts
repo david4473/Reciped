@@ -12,3 +12,8 @@ export type Recipe = {
   isPublic: boolean;
   authorId: string;
 };
+
+export type RecipeInput = Omit<
+  Recipe,
+  "id" | "authorId" | "createdAt" | "updatedAt" | "isPublic"
+>;
