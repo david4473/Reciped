@@ -27,6 +27,7 @@ import { Badge } from "@/components/ui/badge";
 import { getUserID } from "@/lib/auth-server";
 import { createRecipe } from "@/utils/serverActions/recipes";
 import { difficultyLevel } from "@/utils/config";
+import { useFormField } from "@/hooks/useFormField";
 
 export const Route = createFileRoute("/create-recipe/")({
   component: RouteComponent,
@@ -58,33 +59,14 @@ function RouteComponent() {
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const [steps, setSteps] = useState<string[]>([""]);
 
-  const addIngredient = () => {
-    setIngredients([...ingredients, ""]);
-  };
-
-  const removeIngredient = (index: number) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
-  };
-
-  const updateIngredient = (index: number, value: string) => {
-    const updated = [...ingredients];
-    updated[index] = value;
-    setIngredients(updated);
-  };
-
-  const addStep = () => {
-    setSteps([...steps, ""]);
-  };
-
-  const removeStep = (index: number) => {
-    setSteps(steps.filter((_, i) => i !== index));
-  };
-
-  const updateStep = (index: number, value: string) => {
-    const updated = [...steps];
-    updated[index] = value;
-    setSteps(updated);
-  };
+  const {
+    addIngredient,
+    removeIngredient,
+    updateIngredient,
+    addStep,
+    removeStep,
+    updateStep,
+  } = useFormField(setIngredients, setSteps, steps, ingredients);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

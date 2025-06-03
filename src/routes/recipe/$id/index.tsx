@@ -59,9 +59,15 @@ function RouteComponent() {
               <div className="flex items-center gap-4 flex-wrap">
                 <Badge
                   variant="outline"
-                  className={difficultyConfig[recipe.difficulty].color}
+                  className={
+                    recipe.difficulty
+                      ? difficultyConfig[recipe.difficulty].color
+                      : ""
+                  }
                 >
-                  {difficultyConfig[recipe.difficulty].label}
+                  {recipe.difficulty
+                    ? difficultyConfig[recipe.difficulty].label
+                    : ""}
                 </Badge>
                 <div className="flex items-center gap-1 text-muted-foreground">
                   <Clock className="h-4 w-4" />
@@ -86,7 +92,7 @@ function RouteComponent() {
             {isAuthor && (
               <div className="flex items-center gap-2">
                 <Button asChild>
-                  <Link to={`/recipe/${recipe.id}/edit`}>
+                  <Link to="/recipe/$id/edit" params={{ id: recipe.id }}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Recipe
                   </Link>

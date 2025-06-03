@@ -26,6 +26,7 @@ import {
   useNavigate,
 } from "@tanstack/react-router";
 import { getRecipeById, updateRecipe } from "@/utils/serverActions/recipes";
+import { useFormField } from "@/hooks/useFormField";
 
 export const Route = createFileRoute("/recipe/$id/edit/")({
   component: RouteComponent,
@@ -69,33 +70,14 @@ function RouteComponent() {
   ]);
   const [steps, setSteps] = useState<string[]>([...recipe.steps]);
 
-  const addIngredient = () => {
-    setIngredients([...ingredients, ""]);
-  };
-
-  const removeIngredient = (index: number) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
-  };
-
-  const updateIngredient = (index: number, value: string) => {
-    const updated = [...ingredients];
-    updated[index] = value;
-    setIngredients(updated);
-  };
-
-  const addStep = () => {
-    setSteps([...steps, ""]);
-  };
-
-  const removeStep = (index: number) => {
-    setSteps(steps.filter((_, i) => i !== index));
-  };
-
-  const updateStep = (index: number, value: string) => {
-    const updated = [...steps];
-    updated[index] = value;
-    setSteps(updated);
-  };
+  const {
+    addIngredient,
+    removeIngredient,
+    updateIngredient,
+    addStep,
+    removeStep,
+    updateStep,
+  } = useFormField(setIngredients, setSteps, steps, ingredients);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,7 +115,7 @@ function RouteComponent() {
           {/* Header */}
           <div className="flex items-center gap-4 mb-6">
             <Button variant="ghost" size="sm" asChild>
-              <Link to={`/recipe/${id}`}>
+              <Link to="/recipe/$id" params={{ id }}>
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to {recipe.title?.slice(0, 15)}
               </Link>
