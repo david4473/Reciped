@@ -26,7 +26,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getUserID } from "@/lib/auth-server";
 import { createRecipe } from "@/utils/serverActions/recipes";
-import { difficultyLevel, Recipe } from "@/types";
+import { difficultyLevel } from "@/utils/config";
 
 export const Route = createFileRoute("/create-recipe/")({
   component: RouteComponent,

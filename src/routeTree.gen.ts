@@ -11,20 +11,13 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SigninImport } from './routes/signin'
 import { Route as IndexImport } from './routes/index'
+import { Route as MyRecipesIndexImport } from './routes/my-recipes/index'
 import { Route as CreateRecipeIndexImport } from './routes/create-recipe/index'
-import { Route as MyRecipesIndexImport } from './routes/MyRecipes/index'
 import { Route as RecipeIdIndexImport } from './routes/recipe/$id/index'
 import { Route as RecipeIdEditIndexImport } from './routes/recipe/$id/edit/index'
 
 // Create/Update Routes
-
-const SigninRoute = SigninImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,15 +25,15 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const CreateRecipeIndexRoute = CreateRecipeIndexImport.update({
-  id: '/create-recipe/',
-  path: '/create-recipe/',
+const MyRecipesIndexRoute = MyRecipesIndexImport.update({
+  id: '/my-recipes/',
+  path: '/my-recipes/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const MyRecipesIndexRoute = MyRecipesIndexImport.update({
-  id: '/MyRecipes/',
-  path: '/MyRecipes/',
+const CreateRecipeIndexRoute = CreateRecipeIndexImport.update({
+  id: '/create-recipe/',
+  path: '/create-recipe/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,25 +60,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
-      parentRoute: typeof rootRoute
-    }
-    '/MyRecipes/': {
-      id: '/MyRecipes/'
-      path: '/MyRecipes'
-      fullPath: '/MyRecipes'
-      preLoaderRoute: typeof MyRecipesIndexImport
-      parentRoute: typeof rootRoute
-    }
     '/create-recipe/': {
       id: '/create-recipe/'
       path: '/create-recipe'
       fullPath: '/create-recipe'
       preLoaderRoute: typeof CreateRecipeIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-recipes/': {
+      id: '/my-recipes/'
+      path: '/my-recipes'
+      fullPath: '/my-recipes'
+      preLoaderRoute: typeof MyRecipesIndexImport
       parentRoute: typeof rootRoute
     }
     '/recipe/$id/': {
@@ -109,18 +95,16 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
-  '/MyRecipes': typeof MyRecipesIndexRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
+  '/my-recipes': typeof MyRecipesIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
   '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
-  '/MyRecipes': typeof MyRecipesIndexRoute
   '/create-recipe': typeof CreateRecipeIndexRoute
+  '/my-recipes': typeof MyRecipesIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
   '/recipe/$id/edit': typeof RecipeIdEditIndexRoute
 }
@@ -128,9 +112,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
-  '/MyRecipes/': typeof MyRecipesIndexRoute
   '/create-recipe/': typeof CreateRecipeIndexRoute
+  '/my-recipes/': typeof MyRecipesIndexRoute
   '/recipe/$id/': typeof RecipeIdIndexRoute
   '/recipe/$id/edit/': typeof RecipeIdEditIndexRoute
 }
@@ -139,25 +122,22 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/signin'
-    | '/MyRecipes'
     | '/create-recipe'
+    | '/my-recipes'
     | '/recipe/$id'
     | '/recipe/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/signin'
-    | '/MyRecipes'
     | '/create-recipe'
+    | '/my-recipes'
     | '/recipe/$id'
     | '/recipe/$id/edit'
   id:
     | '__root__'
     | '/'
-    | '/signin'
-    | '/MyRecipes/'
     | '/create-recipe/'
+    | '/my-recipes/'
     | '/recipe/$id/'
     | '/recipe/$id/edit/'
   fileRoutesById: FileRoutesById
@@ -165,18 +145,16 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SigninRoute: typeof SigninRoute
-  MyRecipesIndexRoute: typeof MyRecipesIndexRoute
   CreateRecipeIndexRoute: typeof CreateRecipeIndexRoute
+  MyRecipesIndexRoute: typeof MyRecipesIndexRoute
   RecipeIdIndexRoute: typeof RecipeIdIndexRoute
   RecipeIdEditIndexRoute: typeof RecipeIdEditIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SigninRoute: SigninRoute,
-  MyRecipesIndexRoute: MyRecipesIndexRoute,
   CreateRecipeIndexRoute: CreateRecipeIndexRoute,
+  MyRecipesIndexRoute: MyRecipesIndexRoute,
   RecipeIdIndexRoute: RecipeIdIndexRoute,
   RecipeIdEditIndexRoute: RecipeIdEditIndexRoute,
 }
@@ -192,9 +170,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/signin",
-        "/MyRecipes/",
         "/create-recipe/",
+        "/my-recipes/",
         "/recipe/$id/",
         "/recipe/$id/edit/"
       ]
@@ -202,14 +179,11 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/signin": {
-      "filePath": "signin.tsx"
-    },
-    "/MyRecipes/": {
-      "filePath": "MyRecipes/index.tsx"
-    },
     "/create-recipe/": {
       "filePath": "create-recipe/index.tsx"
+    },
+    "/my-recipes/": {
+      "filePath": "my-recipes/index.tsx"
     },
     "/recipe/$id/": {
       "filePath": "recipe/$id/index.tsx"

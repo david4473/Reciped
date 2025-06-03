@@ -1,3 +1,9 @@
+export enum difficultyLevel {
+  EASY = "EASY",
+  MEDIUM = "MEDIUM",
+  HARD = "HARD",
+}
+
 export const difficultyConfig = {
   EASY: {
     color: "bg-green-100 text-green-800 border-green-200",

@@ -8,7 +8,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { getUserID } from "@/lib/auth-server";
 import { use } from "react";
 
-export const Route = createFileRoute("/MyRecipes/")({
+export const Route = createFileRoute("/my-recipes/")({
   component: RouteComponent,
   beforeLoad: async () => {
     const userID = await getUserID();

@@ -1,8 +1,4 @@
-export enum difficultyLevel {
-  EASY = "EASY",
-  MEDIUM = "MEDIUM",
-  HARD = "HARD",
-}
+import { difficultyLevel } from "@/utils/config";
 
 export type Recipe = {
   id: string;
