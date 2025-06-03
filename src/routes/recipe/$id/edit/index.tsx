@@ -101,7 +101,6 @@ function RouteComponent() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await updateRecipe({
