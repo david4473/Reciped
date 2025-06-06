@@ -29,7 +29,7 @@ import { createRecipe } from "@/utils/serverActions/recipes";
 import { difficultyLevel } from "@/utils/config";
 import { useFormField } from "@/hooks/useFormField";
 
-export const Route = createFileRoute("/create-recipe/")({
+export const Route = createFileRoute("/add-recipe/")({
   component: RouteComponent,
   beforeLoad: async () => {
     const userID = await getUserID();
@@ -83,11 +83,11 @@ function RouteComponent() {
           steps: steps.filter((s) => s.trim()),
         },
       });
-      console.log("Recipe created:", {});
+      console.log("Recipe added:", {});
 
       navigate({ to: "/" });
     } catch (error) {
-      console.error("Failed to create recipe:", error);
+      console.error("Failed to add recipe:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -115,7 +115,7 @@ function RouteComponent() {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create New Recipe</h1>
+            <h1 className="text-3xl font-bold mb-2">Add New Recipe</h1>
             <p className="text-muted-foreground">
               Share your delicious recipe with the community.
             </p>
@@ -289,7 +289,7 @@ function RouteComponent() {
                 disabled={!isFormValid || isSubmitting}
                 className="flex-1 md:flex-none"
               >
-                {isSubmitting ? "Creating Recipe..." : "Create Recipe"}
+                {isSubmitting ? "Adding Recipe..." : "Add Recipe"}
               </Button>
               <Button type="button" variant="outline" asChild>
                 <Link to="/">Cancel</Link>

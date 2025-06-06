@@ -23,7 +23,7 @@ export function Header() {
 
   const handleCreateRecipe = () => {
     if (session) {
-      navigate({ to: "/create-recipe" });
+      navigate({ to: "/add-recipe" });
     } else {
       setShowSignInModal(true);
     }
@@ -31,7 +31,7 @@ export function Header() {
 
   const handleSignInSuccess = () => {
     setShowSignInModal(false);
-    navigate({ to: "/create-recipe" });
+    navigate({ to: "/add-recipe" });
   };
 
   const handleSignOut = () => {
@@ -78,7 +78,7 @@ export function Header() {
                   </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/MyRecipes" className="cursor-pointer">
+                    <Link to="/my-recipes" className="cursor-pointer">
                       <Pizza className="mr-2 h-4 w-4" />
                       <span>My Recipes</span>
                     </Link>

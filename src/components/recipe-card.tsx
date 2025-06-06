@@ -28,14 +28,10 @@ export default function RecipeCard({
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    // Simulate API call
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
     onDelete?.(recipe.id);
     setIsDeleting(false);
-  };
-
-  const handleTogglePrivacy = () => {
-    onTogglePrivacy?.(recipe.id);
   };
 
   return (

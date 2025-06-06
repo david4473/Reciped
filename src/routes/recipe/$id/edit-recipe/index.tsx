@@ -28,7 +28,7 @@ import {
 import { getRecipeById, updateRecipe } from "@/utils/serverActions/recipes";
 import { useFormField } from "@/hooks/useFormField";
 
-export const Route = createFileRoute("/recipe/$id/edit/")({
+export const Route = createFileRoute("/recipe/$id/edit-recipe/")({
   component: RouteComponent,
   beforeLoad: async () => {
     const userID = await getUserID();

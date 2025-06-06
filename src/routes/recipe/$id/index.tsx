@@ -92,7 +92,7 @@ function RouteComponent() {
             {isAuthor && (
               <div className="flex items-center gap-2">
                 <Button asChild>
-                  <Link to="/recipe/$id/edit" params={{ id: recipe.id }}>
+                  <Link to="/recipe/$id/edit-recipe" params={{ id: recipe.id }}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Recipe
                   </Link>
