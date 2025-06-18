@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vinxi dev --host",
-    "build": "vinxi build",
+    "build": "vinxi build --preset vercel",
     "start": "vinxi start"
   },
   "dependencies": {

@@ -1,7 +1,7 @@
 import { Plus, ChefHat } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import RecipeCard from "@/components/recipe-card";
+import RecipeCard from "@/components/RecipeCard";
 import authClient from "@/lib/auth-client";
 import { getAuthorRecipes } from "@/utils/serverActions/recipes";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";

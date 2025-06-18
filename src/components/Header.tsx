@@ -12,7 +12,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import authClient from "@/lib/auth-client";
 import { useState } from "react";
-import SignInModal from "./sign-in-modal";
+import SignInModal from "./SignInModal";
 
 export function Header() {
   const { data: session } = authClient.useSession();
