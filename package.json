@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vinxi dev --host",
-    "build": "vinxi build --preset vercel",
+    "build": "vinxi build",
     "start": "vinxi start"
   },
   "dependencies": {
@@ -25,7 +25,7 @@
     "@tanstack/react-query": "^5.76.1",
     "@tanstack/react-router": "^1.120.3",
     "@tanstack/react-router-devtools": "^1.120.3",
-    "@tanstack/react-start": "^1.120.3",
+    "@tanstack/react-start": "^1.121.23",
     "@tanstack/start": "^1.120.9",
     "better-auth": "^1.2.7",
     "class-variance-authority": "^0.7.1",
