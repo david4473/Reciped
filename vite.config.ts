@@ -4,13 +4,4 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [tanstackStart({ target: "netlify" })],
-  build: {
-    commonjsOptions: {
-      include: [/node_modules/],
-      transformMixedEsModules: true,
-    },
-  },
-  optimizeDeps: {
-    include: ["@tanstack/react-start"],
-  },
 });
