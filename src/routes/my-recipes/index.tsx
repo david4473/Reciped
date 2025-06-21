@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 import RecipeCard from "@/components/recipe-card";
 import authClient from "@/lib/auth-client";
-import { getAuthorRecipes } from "@/utils/serverActions/recipes";
+import { getAuthorRecipes } from "@/api/recipes";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { getUserID } from "@/lib/auth-server";
 import { use } from "react";

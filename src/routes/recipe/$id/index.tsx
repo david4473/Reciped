@@ -18,7 +18,7 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { difficultyConfig } from "@/utils/config";
-import { getRecipeById } from "@/utils/serverActions/recipes";
+import { getRecipeById } from "@/api/recipes";
 import authClient from "@/lib/auth-client";
 
 export const Route = createFileRoute("/recipe/$id/")({

@@ -6,10 +6,3 @@ export const getUserID = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     return context?.user?.id;
   });
-
-/* export const getUserAvatar = createServerFn({ method: "GET" })
-  .middleware([authMiddleware])
-  .handler(async ({ context }) => {
-    return context?.user?.image;
-  });
- */

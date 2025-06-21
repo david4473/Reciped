@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import authClient from "@/lib/auth-client";
 import { getUserID } from "@/lib/auth-server";
-import { getRecipes } from "@/utils/serverActions/recipes";
+import { getRecipes } from "@/api/recipes";
 import RecipeCard from "@/components/recipe-card";
 
 export const Route = createFileRoute("/")({
