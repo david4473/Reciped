@@ -3,6 +3,8 @@ import authClient from "@/lib/auth-client";
 import { getUserID } from "@/lib/auth-server";
 import { getRecipes } from "@/utils/serverActions/recipes";
 import RecipeCard from "@/components/RecipeCard";
+import { getRecipes } from "@/api/recipes";
+import RecipeCard from "@/components/recipe-card";
 
 export const Route = createFileRoute("/")({
   component: Home,

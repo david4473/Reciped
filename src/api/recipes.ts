@@ -1,7 +1,7 @@
 import { PrismaClient, Recipe } from "@/generated/prisma";
 import { getUserID } from "@/lib/auth-server";
 import { createServerFn, json } from "@tanstack/react-start";
-import { RecipeInput } from "../types";
+import { RecipeInput } from "../utils/types";
 
 const prisma = new PrismaClient();
 

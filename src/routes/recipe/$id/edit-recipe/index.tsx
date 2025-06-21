@@ -25,7 +25,7 @@ import {
   redirect,
   useNavigate,
 } from "@tanstack/react-router";
-import { getRecipeById, updateRecipe } from "@/utils/serverActions/recipes";
+import { getRecipeById, updateRecipe } from "@/api/recipes";
 import { useFormField } from "@/hooks/useFormField";
 
 export const Route = createFileRoute("/recipe/$id/edit-recipe/")({

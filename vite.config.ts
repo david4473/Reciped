@@ -1,7 +1,14 @@
 // vite.config.ts
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
 export default defineConfig({
-  plugins: [tanstackStart({ target: "netlify" })],
+  plugins: [
+    tsconfigPaths(),
+    // tailwindcss(), sentry(), ...
+    tanstackStart({
+      /** Add your options here */
+    }),
+  ],
 });
