@@ -25,7 +25,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getUserID } from "@/lib/auth-server";
-import { createRecipe } from "@/api/recipes";
+import { createRecipe } from "@/utils/server-actions/recipes";
 import { difficultyLevel } from "@/utils/config";
 import { useFormField } from "@/hooks/useFormField";
 

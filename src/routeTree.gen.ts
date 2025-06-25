@@ -8,16 +8,17 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createServerRootRoute } from '@tanstack/react-start/server'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MyRecipesIndexRouteImport } from './routes/my-recipes/index'
 import { Route as AddRecipeIndexRouteImport } from './routes/add-recipe/index'
 import { Route as RecipeIdIndexRouteImport } from './routes/recipe/$id/index'
-<<<<<<< HEAD
-=======
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
->>>>>>> restore-working-state
-import { Route as RecipeIdEditRecipeIndexRouteImport } from './routes/recipe/$id/edit-recipe/index'
+import { Route as Edit_recipeIdIndexRouteImport } from './routes/edit_recipe/$id/index'
+import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
+
+const rootServerRouteImport = createServerRootRoute()
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,44 +40,38 @@ const RecipeIdIndexRoute = RecipeIdIndexRouteImport.update({
   path: '/recipe/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
-<<<<<<< HEAD
-=======
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
+const Edit_recipeIdIndexRoute = Edit_recipeIdIndexRouteImport.update({
+  id: '/edit_recipe/$id/',
+  path: '/edit_recipe/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
->>>>>>> restore-working-state
-const RecipeIdEditRecipeIndexRoute = RecipeIdEditRecipeIndexRouteImport.update({
-  id: '/recipe/$id/edit-recipe/',
-  path: '/recipe/$id/edit-recipe/',
-  getParentRoute: () => rootRouteImport,
+const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/add-recipe': typeof AddRecipeIndexRoute
   '/my-recipes': typeof MyRecipesIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/edit_recipe/$id': typeof Edit_recipeIdIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
-  '/recipe/$id/edit-recipe': typeof RecipeIdEditRecipeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/add-recipe': typeof AddRecipeIndexRoute
   '/my-recipes': typeof MyRecipesIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/edit_recipe/$id': typeof Edit_recipeIdIndexRoute
   '/recipe/$id': typeof RecipeIdIndexRoute
-  '/recipe/$id/edit-recipe': typeof RecipeIdEditRecipeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/add-recipe/': typeof AddRecipeIndexRoute
   '/my-recipes/': typeof MyRecipesIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/edit_recipe/$id/': typeof Edit_recipeIdIndexRoute
   '/recipe/$id/': typeof RecipeIdIndexRoute
-  '/recipe/$id/edit-recipe/': typeof RecipeIdEditRecipeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -84,34 +79,46 @@ export interface FileRouteTypes {
     | '/'
     | '/add-recipe'
     | '/my-recipes'
-    | '/api/auth/$'
+    | '/edit_recipe/$id'
     | '/recipe/$id'
-    | '/recipe/$id/edit-recipe'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/add-recipe'
-    | '/my-recipes'
-    | '/api/auth/$'
-    | '/recipe/$id'
-    | '/recipe/$id/edit-recipe'
+  to: '/' | '/add-recipe' | '/my-recipes' | '/edit_recipe/$id' | '/recipe/$id'
   id:
     | '__root__'
     | '/'
     | '/add-recipe/'
     | '/my-recipes/'
-    | '/api/auth/$'
+    | '/edit_recipe/$id/'
     | '/recipe/$id/'
-    | '/recipe/$id/edit-recipe/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AddRecipeIndexRoute: typeof AddRecipeIndexRoute
   MyRecipesIndexRoute: typeof MyRecipesIndexRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  Edit_recipeIdIndexRoute: typeof Edit_recipeIdIndexRoute
   RecipeIdIndexRoute: typeof RecipeIdIndexRoute
-  RecipeIdEditRecipeIndexRoute: typeof RecipeIdEditRecipeIndexRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/auth/$': typeof ApiAuthSplatServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/auth/$'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/auth/$'
+  id: '__root__' | '/api/auth/$'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,22 +151,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipeIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-<<<<<<< HEAD
-=======
+    '/edit_recipe/$id/': {
+      id: '/edit_recipe/$id/'
+      path: '/edit_recipe/$id'
+      fullPath: '/edit_recipe/$id'
+      preLoaderRoute: typeof Edit_recipeIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
+}
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
->>>>>>> restore-working-state
-    '/recipe/$id/edit-recipe/': {
-      id: '/recipe/$id/edit-recipe/'
-      path: '/recipe/$id/edit-recipe'
-      fullPath: '/recipe/$id/edit-recipe'
-      preLoaderRoute: typeof RecipeIdEditRecipeIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
     }
   }
 }
@@ -168,10 +176,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AddRecipeIndexRoute: AddRecipeIndexRoute,
   MyRecipesIndexRoute: MyRecipesIndexRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  Edit_recipeIdIndexRoute: Edit_recipeIdIndexRoute,
   RecipeIdIndexRoute: RecipeIdIndexRoute,
-  RecipeIdEditRecipeIndexRoute: RecipeIdEditRecipeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+}
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

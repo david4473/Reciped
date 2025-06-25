@@ -1,7 +1,5 @@
 import { createAuthClient } from "better-auth/react";
 
-const authClient = createAuthClient({
-  baseURL: process.env.BASE_URL,
-});
+const authClient = createAuthClient();
 
 export default authClient;

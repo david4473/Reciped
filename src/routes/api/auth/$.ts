@@ -1,20 +1,11 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { auth } from "@/lib/auth-server/better-auth";
+import { createServerFileRoute } from "@tanstack/react-start/server";
 
-<<<<<<< HEAD
-export const APIRoute = createAPIFileRoute("/api/auth/$")({
-  GET: ({ request }: { request: Request }) => {
+export const ServerRoute = createServerFileRoute("/api/auth/$").methods({
+  GET: ({ request }) => {
     return auth.handler(request);
   },
-  POST: ({ request }: { request: Request }) => {
+  POST: ({ request }) => {
     return auth.handler(request);
   },
 });
-=======
-export const Route = createFileRoute('/api/auth/$')({
-  component: RouteComponent,
-})
-
-function RouteComponent() {
-  return <div>Hello "/api/auth/$"!</div>
-}
->>>>>>> restore-working-state

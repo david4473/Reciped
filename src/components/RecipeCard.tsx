@@ -112,7 +112,7 @@ export default function RecipeCard({
             {recipe.overview}
           </p>
           <Link
-            to={`/recipes/${recipe.id}` as string}
+            to={`/recipe/${recipe.id}` as string}
             className="inline-block mt-3 text-sm text-primary hover:underline"
           >
             Read more →

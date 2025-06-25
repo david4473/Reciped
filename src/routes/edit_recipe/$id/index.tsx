@@ -25,10 +25,10 @@ import {
   redirect,
   useNavigate,
 } from "@tanstack/react-router";
-import { getRecipeById, updateRecipe } from "@/api/recipes";
+import { getRecipeById, updateRecipe } from "@/utils/server-actions/recipes";
 import { useFormField } from "@/hooks/useFormField";
 
-export const Route = createFileRoute("/recipe/$id/edit-recipe/")({
+export const Route = createFileRoute("/edit_recipe/$id/")({
   component: RouteComponent,
   beforeLoad: async () => {
     const userID = await getUserID();

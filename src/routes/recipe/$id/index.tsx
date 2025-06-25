@@ -18,7 +18,7 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { difficultyConfig } from "@/utils/config";
-import { getRecipeById } from "@/api/recipes";
+import { getRecipeById } from "@/utils/server-actions/recipes";
 import authClient from "@/lib/auth-client";
 
 export const Route = createFileRoute("/recipe/$id/")({
@@ -92,7 +92,7 @@ function RouteComponent() {
             {isAuthor && (
               <div className="flex items-center gap-2">
                 <Button asChild>
-                  <Link to="/recipe/$id/edit-recipe" params={{ id: recipe.id }}>
+                  <Link to={`/edit_recipe/${recipe.id}`}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Recipe
                   </Link>
