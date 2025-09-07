@@ -19,24 +19,29 @@ import {
 } from "lucide-react";
 import { difficultyConfig } from "@/utils/config";
 import { getRecipeById } from "@/utils/server-actions/recipes";
-import authClient from "@/lib/auth-client";
+import { getUserID } from "@/lib/auth-server";
 
 export const Route = createFileRoute("/recipe/$id/")({
   component: RouteComponent,
-  loader: async ({ params }) => {
+  beforeLoad: async () => {
+    const userID = await getUserID();
+    return { userID };
+  },
+  loader: async ({ params, context: ctx }) => {
     const { id } = params;
-    const recipe = getRecipeById({
+
+    const userID = ctx.userID;
+    const recipe = await getRecipeById({
       data: id,
     });
-    return recipe;
+    return { recipe, userID };
   },
 });
 
 function RouteComponent() {
-  const recipe = Route.useLoaderData();
+  const { recipe, userID } = Route.useLoaderData();
 
-  const { data: session } = authClient.useSession();
-  const isAuthor = session?.user.id === recipe.authorId;
+  const isAuthor = userID === recipe.authorId;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -92,7 +97,7 @@ function RouteComponent() {
             {isAuthor && (
               <div className="flex items-center gap-2">
                 <Button asChild>
-                  <Link to={`/edit_recipe/${recipe.id}`}>
+                  <Link to="/edit_recipe/$id" params={{ id: recipe.id }}>
                     <Edit className="h-4 w-4 mr-2" />
                     Edit Recipe
                   </Link>

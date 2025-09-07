@@ -38,6 +38,7 @@ export const Route = createFileRoute("/edit_recipe/$id/")({
   },
   loader: async ({ params, context: ctx }) => {
     // Ensure the user is authenticated
+
     if (!ctx.userID) {
       throw redirect({ to: "/" });
     }

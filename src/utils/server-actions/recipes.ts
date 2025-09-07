@@ -39,9 +39,12 @@ export const getAuthorRecipes = createServerFn({ method: "GET" })
       where: { authorId: data },
       include: { author: true },
     });
+
     if (!recipes) {
       throw new Error(`No recipes found for author with ID ${data}`);
     }
+
+    return recipes;
   });
 
 export const createRecipe = createServerFn({ method: "POST" })

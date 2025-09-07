@@ -22,12 +22,12 @@ export const Route = createFileRoute("/my-recipes/")({
     }
 
     const recipes = await getAuthorRecipes({ data: ctx.userID });
-    return { recipes };
+    return recipes;
   },
 });
 
 function RouteComponent() {
-  const { recipes } = Route.useLoaderData();
+  const recipes = Route.useLoaderData();
 
   const publicRecipes = recipes.filter((recipe) => recipe.isPublic).length;
   const privateRecipes = recipes.filter((recipe) => !recipe.isPublic).length;

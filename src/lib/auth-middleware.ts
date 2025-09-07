@@ -1,22 +1,21 @@
-import { getHeaders } from "@tanstack/react-start/server";
+import { getHeaders, getWebRequest } from "@tanstack/react-start/server";
 import { createMiddleware } from "@tanstack/react-start";
-import authClient from "./auth-client";
-
-const { getSession } = authClient;
+import { auth } from "./auth-server/better-auth";
 
 export const authMiddleware = createMiddleware({ type: "function" }).server(
   async ({ next }) => {
-    const { data: session } = await getSession({
-      fetchOptions: {
-        headers: getHeaders() as HeadersInit,
-      },
+    const request = getWebRequest();
+
+    const userSession = await auth.api.getSession({
+      headers: request.headers,
     });
+
     return await next({
       context: {
         user: {
-          id: session?.user?.id,
-          name: session?.user?.name,
-          image: session?.user?.image,
+          id: userSession?.user?.id,
+          name: userSession?.user?.name,
+          image: userSession?.user?.image,
         },
       },
     });
