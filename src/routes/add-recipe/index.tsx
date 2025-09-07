@@ -41,7 +41,6 @@ export const Route = createFileRoute("/add-recipe/")({
     if (!ctx.userID) {
       throw redirect({ to: "/" });
     }
-    return { userID: ctx.userID };
   },
 });
 

@@ -9,6 +9,7 @@ export default defineConfig({
     // tailwindcss(), sentry(), ...
     tanstackStart({
       /** Add your options here */
+      target: "vercel",
     }),
   ],
 });
