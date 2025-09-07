@@ -1,4 +1,4 @@
-import { ChefHat, LogOut, Pizza } from "lucide-react";
+import { ChefHat, Pizza } from "lucide-react";
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 
 import { Button } from "@/components/ui/button";
