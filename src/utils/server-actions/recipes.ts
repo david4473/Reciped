@@ -114,3 +114,20 @@ export const updateRecipe = createServerFn({ method: "POST" })
       throw new Error("Failed to update recipe");
     }
   });
+
+export const deleteRecipe = createServerFn({ method: "POST" })
+  .validator((id: string) => id)
+  .handler(async ({ data }) => {
+    try {
+      const deletedRecipe = await prisma.recipe.delete({
+        where: { id: data },
+      });
+      if (!deletedRecipe) {
+        throw new Error(`Failed to delete recipe with ID ${data}`);
+      }
+      return { message: "Recipe deleted successfully" };
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+      throw new Error("Failed to delete recipe");
+    }
+  });

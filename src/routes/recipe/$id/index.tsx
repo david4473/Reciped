@@ -18,7 +18,7 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { difficultyConfig } from "@/utils/config";
-import { getRecipeById } from "@/utils/server-actions/recipes";
+import { deleteRecipe, getRecipeById } from "@/utils/server-actions/recipes";
 import { getUserID } from "@/lib/auth-server";
 
 export const Route = createFileRoute("/recipe/$id/")({
@@ -34,14 +34,26 @@ export const Route = createFileRoute("/recipe/$id/")({
     const recipe = await getRecipeById({
       data: id,
     });
-    return { recipe, userID };
+    return { recipe, userID, id };
   },
 });
 
 function RouteComponent() {
-  const { recipe, userID } = Route.useLoaderData();
+  const { recipe, userID, id } = Route.useLoaderData();
 
   const isAuthor = userID === recipe.authorId;
+
+  const handleDelete = async () => {
+    try {
+      const response = await deleteRecipe({ data: id });
+      if (response) {
+        console.log(response);
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -112,10 +124,13 @@ function RouteComponent() {
                   <DropdownMenuContent align="end" className="w-48">
                     <DropdownMenuItem className="cursor-pointer">
                       <Lock className="mr-2 h-4 w-4" />
-                      {recipe.isPublic ? "Make Public" : "Make Private"}
+                      {recipe.isPublic ? "Make Private" : "Make Public"}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="cursor-pointer text-destructive focus:text-destructive">
+                    <DropdownMenuItem
+                      className="cursor-pointer text-destructive focus:text-destructive"
+                      onClick={handleDelete}
+                    >
                       <Trash2 className="mr-2 h-4 w-4" />
                       Delete Recipe
                     </DropdownMenuItem>
