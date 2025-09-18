@@ -4,7 +4,7 @@ import { MoreVertical, Clock, Edit, Trash2, Lock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Link } from "@tanstack/react-router";
-import { Recipe as prismaRecipe } from "@/generated/prisma";
+import { Recipe as prismaRecipe } from "@/generated/prisma/index.js";
 import authClient from "@/lib/auth-client";
 import { getIngredientName } from "@/utils/stringUtils";
 import { difficultyConfig } from "@/utils/config";

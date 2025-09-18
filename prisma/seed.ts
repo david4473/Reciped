@@ -1,4 +1,8 @@
-import { difficultyLevel, Prisma, PrismaClient } from "@/generated/prisma";
+import {
+  difficultyLevel,
+  Prisma,
+  PrismaClient,
+} from "@/generated/prisma/index.js";
 
 const prisma = new PrismaClient();
 

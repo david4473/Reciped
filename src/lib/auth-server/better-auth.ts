@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { reactStartCookies } from "better-auth/react-start";
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma/index.js";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 
 const prisma = new PrismaClient();

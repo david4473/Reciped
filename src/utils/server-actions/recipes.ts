@@ -1,4 +1,4 @@
-import { PrismaClient, Recipe } from "@/generated/prisma";
+import { PrismaClient, Recipe } from "@/generated/prisma/index.js";
 import { getUserID } from "@/lib/auth-server";
 import { createServerFn, json } from "@tanstack/react-start";
 import { RecipeInput } from "../types";
